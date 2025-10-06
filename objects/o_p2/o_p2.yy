@@ -13,8 +13,8 @@
     "path":"folders/Objects.yy",
   },
   "parentObjectId":{
-    "name":"o_p1",
-    "path":"objects/o_p1/o_p1.yy",
+    "name":"o_player",
+    "path":"objects/o_player/o_player.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

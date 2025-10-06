@@ -1,14 +1,14 @@
 var target_y;
 var has_target = false;
 
-if (instance_exists(o_p1) && instance_exists(o_p2)) {
+if (instance_exists(o_player) && instance_exists(o_p2)) {
     // avg y
-    target_y = (o_p1.y + o_p2.y) / 2;
+    target_y = (o_player.y + o_p2.y) / 2;
     has_target = true;
 }
-else if (instance_exists(o_p1)) {
+else if (instance_exists(o_player)) {
     // if p1 is the only alive, follow it
-    target_y = o_p1.y;
+    target_y = o_player.y;
     has_target = true;
 }
 else if (instance_exists(o_p2)) {
