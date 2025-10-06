@@ -1,29 +1,34 @@
-var num_clouds = instance_number(o_cloud);  //keeping track of #clouds
-//hey every frame in step, increase 
+var num_clouds = instance_number(o_cloud);
 frames_since_cloud += 1;
 
-//we want to have 5 clouds at the start of the clouds
-if(frames_since_cloud > frames_between_cloud || num_clouds < 5){ //5 because at least 5 clouds first
-	if(num_clouds < max_clouds){
-		//make sure we are in the right layer
-		var new_cloud = instance_create_layer(
-			random_range(30, room_width -30), //wanna make sure 30 away from the left edge and 30 away from right edge
-			random_range(80, room_height - 200), //80 from the bottom and 200 from the top
-			"Instances",
-			o_cloud
-		);	
-		
-		with (new_cloud) {
-            var tries = 0;
-            while (tries < 3000 && collision_rectangle(x-8, y-8, x+16, y+16, o_cloud, false, true)) {
-                x = random_range(30, room_width - 30);
-                y = random_range(80, room_height - 200);
-                tries += 1;
+// Ensure we have at least 5 clouds at start
+if (frames_since_cloud > frames_between_cloud || num_clouds < 5) {
+    if (num_clouds < max_clouds) {
+        var new_x, new_y;
+        var tries = 0;
+        var valid_position = false;
+
+        // try to make sure the clouds dont overlap
+        while (!valid_position && tries < 100) {
+            tries += 1;
+            
+            // random spot
+            new_x = random_range(80, room_width - 80);
+            new_y = random_range(80, room_height - 200);
+
+            // dimension of smallest cloud
+            var _w = sprite_get_width(s_cloud1);
+            var _h = sprite_get_height(s_cloud1);
+
+            if (collision_rectangle(new_x - _w/2, new_y - _h/2, new_x + _w/2, new_y + _h/2, o_cloud, false, true) == noone) {
+                valid_position = true;
             }
+        }
+
+        if (valid_position) {
+            instance_create_layer(new_x, new_y, "Instances", o_cloud);
         }
 
         frames_since_cloud = 0;
     }
 }
-
-
